@@ -1,4 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_widget_lecture/ui/dashboard.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.deepPurple,
+          backgroundColor: Colors.white, // Set background color to white
+          // You can customize more colors here if needed
+        ),
+        // useMaterial3: true, // No longer needed as Material3 is the default
+      ),
+      home: Dashboard(),
+    );
+  }
+}
 
 class Dashboard extends StatelessWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -9,24 +34,47 @@ class Dashboard extends StatelessWidget {
       appBar: AppBar(
         title: const Text('TRAVEL PLANNER'),
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildImageCard(
-              imageUrl: 'https://picsum.photos/id/13/2500/1667',
-              textOverlay: 'Just Travel', // Tambahkan teks overlay
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search...',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              onChanged: (value) {
+                // Implement your search functionality here
+                print('Search query: $value');
+              },
             ),
-            const SizedBox(height: 16),
-            _buildProductList(),
-            const SizedBox(height: 16),
-            _buildImageCard(
-              imageUrl: 'https://picsum.photos/id/172/2000/1325',
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _buildImageCard(
+                    imageUrl: 'https://picsum.photos/id/13/2500/1667',
+                    textOverlay: 'Just Travel', // Add text overlay
+                  ),
+                  const SizedBox(height: 16),
+                  _buildProductList(),
+                  const SizedBox(height: 16),
+                  _buildImageCard(
+                    imageUrl: 'https://picsum.photos/id/172/2000/1325',
+                  ),
+                  const SizedBox(height: 16),
+                ],
+              ),
             ),
-            const SizedBox(height: 16),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -36,7 +84,7 @@ class Dashboard extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: Colors.white, // Tambahkan latar belakang putih salju
+            color: Colors.white, // Add snow white background
             borderRadius: BorderRadius.circular(8.0),
           ),
           child: ClipRRect(
@@ -47,7 +95,7 @@ class Dashboard extends StatelessWidget {
             ),
           ),
         ),
-        if (textOverlay != null) // Tambahkan teks overlay jika diberikan
+        if (textOverlay != null) // Add text overlay if provided
           Positioned.fill(
             child: Align(
               alignment: Alignment.center,
@@ -57,7 +105,7 @@ class Dashboard extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Pacifico', // Gunakan font Pacifico
+                  fontFamily: 'Pacifico', // Use Pacifico font
                 ),
               ),
             ),
@@ -79,13 +127,13 @@ class Dashboard extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           ProductImage(
-            rndSeed: 4,
+            rndSeed: 14,
             nama: "Gunung Bromo",
             harga: 2000000,
           ),
           const SizedBox(width: 16),
           ProductImage(
-            rndSeed: 24,
+            rndSeed: 33,
             nama: "Pantai Biru",
             harga: 8000000,
           ),
@@ -163,10 +211,4 @@ class ProductImage extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: Dashboard(),
-  ));
 }
